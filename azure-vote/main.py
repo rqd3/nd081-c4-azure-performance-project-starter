@@ -83,13 +83,13 @@ r = redis.Redis()
 # Redis Connection to another container
 try:
       if "REDIS_PWD" in os.environ:
-         r = redis.StrictRedis(host=redis_server,
+         r = redis.StrictRedis(host=os.environ['REDIS'],
                            port=6379,
                            password=os.environ['REDIS_PWD'])
       else:
-         r = redis.Redis(redis_server)
+         r = redis.Redis(os.environ['REDIS'])
       r.ping()
- except redis.ConnectionError:
+except redis.ConnectionError:
       exit('Failed to connect to Redis, terminating.')
 
 # Change title to host name to demo NLB
